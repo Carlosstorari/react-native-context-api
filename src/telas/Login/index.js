@@ -1,19 +1,33 @@
 import { useState } from "react";
-import { Text, View, TextInput, TouchableOpacity, StatusBar } from 'react-native';
-import { estilo } from './estilos';
+import { Text, View, TextInput, TouchableOpacity, StatusBar, Alert } from 'react-native';
+import { estilos } from './estilos';
 import { useContext } from "react";
-import { GlobalContext } from "../../contexts/GlobalContext";
+import { TemaContext } from "../../contexts/TemaContext";
+import { AutenticacaoContext } from "../../contexts/AutenticacaoContext";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  const { valor, nome, setNome } = useContext(GlobalContext)
+  const { temaEscolhido } = useContext(TemaContext)
+  const estilo = estilos(temaEscolhido)
+
+  const { login } = useContext(AutenticacaoContext)
+
+  function logandoNoSistema() {
+    const resultado = login(email, senha)
+    if(resultado == 'ok'){
+      navigation.navigate('Principal')
+    }
+    else {
+      Alert.alert(resultado)
+    }
+  }
 
   return (
     <View style={estilo.container}>
       <StatusBar />
-      <Text style={estilo.titulo}>Login = {valor}</Text>
+      <Text style={estilo.titulo}>Login</Text>
 
       <View style={estilo.inputArea}>
         <TextInput
@@ -21,8 +35,8 @@ export default function Login({ navigation }) {
           placeholder="Email"
           placeholderTextColor="#999"
           autoCapitalize="none"
-          value={nome}
-          onChangeText={setNome}
+          value={email}
+          onChangeText={setEmail}
         />
         <TextInput
           style={estilo.input}
@@ -31,12 +45,13 @@ export default function Login({ navigation }) {
           autoCapitalize="none"
           value={senha}
           onChangeText={setSenha}
+          secureTextEntry={true}
         />
       </View>
 
       <TouchableOpacity
         style={estilo.botao}
-        onPress={() => navigation.navigate('Principal')}
+        onPress={() => logandoNoSistema()}
       >
         <Text style={estilo.botaoTexto}>Entrar</Text>
       </TouchableOpacity>
