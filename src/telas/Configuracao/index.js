@@ -5,7 +5,12 @@ import { TemaContext } from '../../contexts/TemaContext';
 
 export default function Configuracao({ navigation }) {
 
-  const { temaAtual, setTemaAtual, temaEscolhido } = useContext(TemaContext)
+  const { 
+    temaAtual, 
+    setTemaAtual, 
+    temaEscolhido,
+    //salvarTemaNoDispositivo 
+  } = useContext(TemaContext)
   const estilo = estilos(temaEscolhido)
 
   return (
@@ -16,7 +21,9 @@ export default function Configuracao({ navigation }) {
         <Text style={estilo.subtitulo}>Tema: {temaAtual}</Text>
         <Switch
           onValueChange={() =>
-            temaAtual === 'escuro' ? setTemaAtual('claro') : setTemaAtual('escuro')
+            temaAtual === 'escuro' ? 
+            setTemaAtual('claro') : 
+            setTemaAtual('escuro')
           }
           value={temaAtual === 'escuro' ? true : false}
         />

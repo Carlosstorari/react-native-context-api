@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { escuro, claro } from '../estilosGlobais'
 
 export const TemaContext = createContext({})
@@ -14,7 +14,8 @@ export function TemaProvider({ children }) {
         <TemaContext.Provider value={{
             temaAtual,
             setTemaAtual,
-            temaEscolhido: temas[temaAtual]
+            temaEscolhido: temas[temaAtual],
+            //salvarTemaNoDispositivo
         }}>
             {children}
         </TemaContext.Provider>
